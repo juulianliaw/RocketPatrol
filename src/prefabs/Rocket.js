@@ -4,5 +4,50 @@ class Rocket extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame);
         //add object to existing scene
         scene.add.existing(this);
+        this.isFiring = false;
+        this.moveSpeed = 2;
     }
-}
+
+    /*update() {
+        if(this.isFiring){
+            this.y -= this.movementSpeed;
+                if(this.y < borderUISize*3){
+                    this.y = game.config.height-borderUISize-borderPadding;
+                    this.isFiring = false;
+                }
+        }else{
+            if(keyLEFT.isDown) {
+                this.x -= this.movementSpeed;
+            }
+            if(keyRIGHT.isDown) {
+                this.x += this.movementSpeed;
+            }
+            if(Phaser.Input.Keyboard.JustDown(keyF)){
+                this.isFiring = true;
+            }
+        this.x = Phaser.Math.Clamp(this.x, borderUISize + borderPadding, game.config.width-borderUISize-borderPadding);
+        }
+    }*/
+    update(){
+        if(!this.isFiring){
+            if(keyLEFT.isDown && this.x >= borderUISize + this.width){
+                this.x -= this.moveSpeed;
+            } else if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width){
+                this.x += this.moveSpeed;
+            }
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyF)){
+            this.isFiring = true;
+        }
+        if(this.isFiring && this.y >= borderUISize * 3 + borderPadding){
+            this.y -= this.moveSpeed;
+        }
+        if(this.y <= borderUISize * 3 + borderPadding){
+            this.isFiring = false;
+            this.y = game.config.height - borderUISize - borderPadding;
+        }
+    }
+    
+} 
+
+

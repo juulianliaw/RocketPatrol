@@ -103,6 +103,7 @@ class Play extends Phaser.Scene {
             return false;
         }
     }
+    //hello
 
     shipExplode(ship){
         //temporarily hide ship
